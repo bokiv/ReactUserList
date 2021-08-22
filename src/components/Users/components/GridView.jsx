@@ -7,8 +7,8 @@ export const GridView = ({users}) => {
 
      <div className="row container">
 
-        {users.map((element) => ( 
-        <div className="col s2 m4 row">
+        {users.map((element, index) => ( 
+        <div className="col s2 m4 row" key={index}>
           <div className="card">
             <div className="card-image">
               <img src={element.picture.large}  alt=""/>

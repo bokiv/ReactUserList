@@ -14,7 +14,7 @@ export const ListView = ({users}) => {
       <p> {"email: " + element.email}</p>
      <p> {"date of birth: " +element.dob.date.slice(0, 10).split("-").reverse().join("-")}</p>
         
-      {/* <a href="#!" className="secondary-content"></a> */}
+       {/* <a href="#!" className="secondary-content"></a>  */}
     </li>
     ))
      }
