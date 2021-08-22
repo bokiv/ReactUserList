@@ -12,7 +12,8 @@ class App extends Component {
      this.state = {
        isListView: true,
        users : [],
-       isRefresh : true
+       isRefresh : true,
+       search : []
      };
      this.onLayoutToggle = this.onLayoutToggle.bind(this);
    }
@@ -22,12 +23,17 @@ class App extends Component {
        isListView: !this.state.isListView
      });
    };
+   
    onBtnRefresh = () => {
     getUsers().then(users => this.setState({users : users}))
      this.setState({
        isRefresh : !this.state.isRefresh
      });
    };
+
+   onTyping = (e) => {
+    console.log(e.target.value)
+   }
 
    componentDidMount(){
     getUsers().then(users => this.setState({users : users}))
@@ -39,7 +45,7 @@ class App extends Component {
   return (
     <Fragment> 
     <Header isListView={this.state.isListView} onLayoutToggle={this.onLayoutToggle} users={this.state.users} 
-            isRefresh={this.state.isRefresh} onBtnRefresh={this.onBtnRefresh} /> 
+            isRefresh={this.state.isRefresh} onBtnRefresh={this.onBtnRefresh} onTyping={this.onTyping}/> 
     <Users isListView={this.state.isListView} users={this.state.users} isRefresh={this.state.isRefresh} /> 
     <Footer/>
     </Fragment>
