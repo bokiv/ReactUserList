@@ -16,6 +16,7 @@ export class Users extends React.Component {
       this.props.isListView
       ? <ListView users={this.props.users}/> 
       : <GridView users={this.props.users}/>
+
     )};
     
 }

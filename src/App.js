@@ -11,7 +11,8 @@ class App extends Component {
      super(props);
      this.state = {
        isListView: true,
-       users : []
+       users : [],
+       isRefresh : true
      };
      this.onLayoutToggle = this.onLayoutToggle.bind(this);
    }
@@ -21,6 +22,12 @@ class App extends Component {
        isListView: !this.state.isListView
      });
    };
+   onBtnRefresh = () => {
+    getUsers().then(users => this.setState({users : users}))
+     this.setState({
+       isRefresh : !this.state.isRefresh
+     });
+   };
 
    componentDidMount(){
     getUsers().then(users => this.setState({users : users}))
@@ -28,11 +35,12 @@ class App extends Component {
 
 
    render() { 
-    console.log('App ', this.state.isListView, this.state.users);
+    console.log('App ',  this.state.isRefresh);
   return (
     <Fragment> 
-    <Header isListView={this.state.isListView} onLayoutToggle={this.onLayoutToggle} users={this.state.users}/> 
-    <Users isListView={this.state.isListView} users={this.state.users}/> 
+    <Header isListView={this.state.isListView} onLayoutToggle={this.onLayoutToggle} users={this.state.users} 
+            isRefresh={this.state.isRefresh} onBtnRefresh={this.onBtnRefresh} /> 
+    <Users isListView={this.state.isListView} users={this.state.users} isRefresh={this.state.isRefresh} /> 
     <Footer/>
     </Fragment>
   );
