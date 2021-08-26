@@ -13,7 +13,8 @@ class App extends Component {
        isListView: true,
        users : [],
        isRefresh : true,
-       search : []
+       search : "",
+       filteredUsers : []
      };
      this.onLayoutToggle = this.onLayoutToggle.bind(this);
    }
@@ -23,17 +24,40 @@ class App extends Component {
        isListView: !this.state.isListView
      });
    };
-   
+
    onBtnRefresh = () => {
     getUsers().then(users => this.setState({users : users}))
      this.setState({
        isRefresh : !this.state.isRefresh
      });
    };
-
+ 
    onTyping = (e) => {
-    console.log(e.target.value)
+      this.setState({
+        search : e.target.value,
+        
+      });
+    console.log(e.target.value) 
    }
+
+   getFilteredUser = () => {
+     this.setState({
+      filteredUsers : this.state.filterUsers
+     })
+     const filterUsers = getUsers().filter(user => user.name.first.toLowerCase().includes(this.search.toLowerCase()));
+     let filteredUsers = filterUsers;
+     return filteredUsers
+   }
+   
+  //  onTyping = () => {
+  //   getUsers().filter((search) => {
+  //     if(this.search === '') {
+  //       return search
+  //     }else if (this.users.name.first.toLowercase().includes(this.search.toLowercase())){
+  //       return search
+  //     }
+  //   }).then(users => this.setState({users : users}))
+  //  }
 
    componentDidMount(){
     getUsers().then(users => this.setState({users : users}))
@@ -45,8 +69,9 @@ class App extends Component {
   return (
     <Fragment> 
     <Header isListView={this.state.isListView} onLayoutToggle={this.onLayoutToggle} users={this.state.users} 
-            isRefresh={this.state.isRefresh} onBtnRefresh={this.onBtnRefresh} onTyping={this.onTyping}/> 
-    <Users isListView={this.state.isListView} users={this.state.users} isRefresh={this.state.isRefresh} /> 
+            isRefresh={this.state.isRefresh} onBtnRefresh={this.onBtnRefresh} onTyping={this.onTyping} search={this.state.search} /> 
+    <Users isListView={this.state.isListView} users={this.state.users}  isRefresh={this.state.isRefresh} onTyping={this.onTyping} 
+            search={this.state.search} getFilteredUser={this.getFilteredUser} /> 
     <Footer/>
     </Fragment>
   );
